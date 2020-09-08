@@ -9,57 +9,57 @@ use Laravel\Ui\Presets\Preset;
 class Foundation extends Preset
 {
 	/**
-      * Install the preset.
-      *
-      * @return void
-      */
-    	public static function install($auth = false)
-    	{
-        	static::updatePackages();
-        	static::updateSass();
-        	static::updateBootstrapping();
+     * Install the preset.
+     *
+     * @return void
+     */
+    public static function install($auth = false)
+    {
+    	static::updatePackages();
+    	static::updateSass();
+    	static::updateBootstrapping();
 
-        	if ($auth) {
-        		static::updateWelcomeView();
-        		static::updateAuthViews();
+        if ($auth) {
+        	static::updateWelcomeView();
+        	static::updateAuthViews();
 
-        	} else {
-        		static::updateWelcomeView();
-        	}
+        } else {
+        	static::updateWelcomeView();
+        }
 
         	static::removeNodeModules();
     	}
 
-    	/**
-    	 * Update the given package array.
-      *
-      * @param  array  $packages
-      * @return array
-      */
+    /**
+     * Update the given package array.
+     *
+     * @param  array  $packages
+     * @return array
+     */
 	protected static function updatePackageArray(array $packages)
-    	{
-    	     return [
-    	          'foundation-sites' 	=> '^6.6.3',
-    	          'jquery' 			=> '^3.2',
-    	          'what-input' 		=> '^4.1.0'
+    {
+    	return [
+            'foundation-sites' 	=> '^6.6.3',
+            'jquery' 			=> '^3.2',
+            'what-input' 		=> '^4.1.0'
 
-    	     ] + Arr::except($packages, [
-			'boostrap',
-			'bootstrap-sass',
+    	] + Arr::except($packages, [
+            'boostrap',
+            'bootstrap-sass',
 			'bulma',
 			'uikit'
-    	     ]);
-    	}
+    	]);
+    }
 
-    	/**
+    /**
 	 * Update the Sass files for the application.
 	 *
 	 * @return void
 	 */
 	protected static function updateSass()
 	{
-	   	// clean up orphan files
-	   	$orphan_sass_files = glob(resource_path('/sass/*.*'));
+        // clean up orphan files
+		$orphan_sass_files = glob(resource_path('/sass/*.*'));
 
 	   	foreach($orphan_sass_files as $sass_file)
 	   	{
@@ -72,47 +72,43 @@ class Foundation extends Preset
 	}
 
 	/**
-      * Update the bootstrapping files.
-      *
-      * @return void
-      */
-    	protected static function updateBootstrapping()
-    	{
-        	(new Filesystem)->delete(
-            	resource_path('js/bootstrap.js')
-        	);
+     * Update the bootstrapping files.
+     *
+     * @return void
+    */
+    protected static function updateBootstrapping()
+    {
+        (new Filesystem)->delete(
+            resource_path('js/bootstrap.js')
+        );
 
-        	copy(__DIR__.'/foundation-stubs/bootstrap.js', resource_path('js/bootstrap.js'));
-    	}
+        copy(__DIR__.'/foundation-stubs/bootstrap.js', resource_path('js/bootstrap.js'));
+    }
 
-    	/**
-      * Update auth views
-      *
-      * @return void
-      */
-    	protected static function updateWelcomeView()
-    	{
-    		// remove default welcome page
-        	(new Filesystem)->delete(
-            	resource_path('views/welcome.blade.php')
-        	);
+    /**
+     * Update auth views
+     *
+     * @return void
+     */
+    protected static function updateWelcomeView()
+    {
+    	// remove default welcome page
+        (new Filesystem)->delete(
+            resource_path('views/welcome.blade.php')
+        );
 
-        	// copy new one with Zurb Foundation buttons
-        	copy(__DIR__.'/foundation-stubs/views/welcome.blade.php', resource_path('views/welcome.blade.php'));
-    	}
+        // copy new one with Zurb Foundation buttons
+        copy(__DIR__.'/foundation-stubs/views/welcome.blade.php', resource_path('views/welcome.blade.php'));
+    }
 
-    	/**
-      * Update auth views
-      *
-      * @return void
-      */
-    	protected static function updateAuthViews()
-    	{
-        	(new Filesystem)->delete(
-            	resource_path('js/bootstrap.js')
-        	);
-
-        	// Copy Zurb Foundation Auth view templates
-        	(new Filesystem)->copyDirectory(__DIR__.'/foundation-stubs/views', resource_path('views'));
-    	}
+    /**
+     * Update auth views
+     *
+     * @return void
+    */
+    protected static function updateAuthViews()
+    {
+        // Copy Zurb Foundation Auth view templates
+        (new Filesystem)->copyDirectory(__DIR__.'/foundation-stubs/views', resource_path('views'));
+    }
 }

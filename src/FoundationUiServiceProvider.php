@@ -12,24 +12,22 @@ class FoundationUiServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    	public function register()
-    	{
-        	if ($this->app->runningInConsole()) {
-            	$this->commands([
-                	//AuthCommand::class,
-                	//ControllersCommand::class,
-                	FoundationUiCommand::class,
-            	]);
-        	}
-    	}
+    public function register()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FoundationUiCommand::class,
+            ]);
+        }
+    }
 
-    	/**
-      * Bootstrap any application services.
-      *
-      * @return void
-      */
-     public function boot()
-    	{
-        	Route::mixin(new \Laravel\Ui\AuthRouteMethods);
-    	}
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Route::mixin(new \Laravel\Ui\AuthRouteMethods);
+    }
 }
