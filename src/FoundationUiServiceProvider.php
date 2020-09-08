@@ -15,10 +15,10 @@ class FoundationUiServiceProvider extends ServiceProvider
 	{
 		UiCommand::macro('foundation', function ($command) {
 
-		}
+		});
 
 		UiCommand::macro('foundation-auth', function ($command) {
 
-		}
+		});
 	}
 }
