@@ -42,8 +42,6 @@ class FoundationUiCommand extends Command
     protected function foundation()
     {
         if ($this->option('auth')) {
-            $this->call('ui:controllers');
-
             $this->call('ui:auth');
 
             Presets\Foundation::install(true);
