@@ -1,24 +1,35 @@
 <?php
 namespace Dijitaq\FoundationUi;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Ui\UiCommand;
+use Laravel\Ui;
 
 class FoundationUiServiceProvider extends ServiceProvider
 {
-	/**
-      * Bootstrap the preset
+    /**
+     * Register the package services.
+     *
+     * @return void
+     */
+    	public function register()
+    	{
+        	if ($this->app->runningInConsole()) {
+            	$this->commands([
+                	//AuthCommand::class,
+                	//ControllersCommand::class,
+                	FoundationUiCommand::class,
+            	]);
+        	}
+    	}
+
+    	/**
+      * Bootstrap any application services.
       *
       * @return void
       */
-	public function boot()
-	{
-		UiCommand::macro('foundation', function ($command) {
-
-		});
-
-		UiCommand::macro('foundation-auth', function ($command) {
-
-		});
-	}
+     public function boot()
+    	{
+        	Route::mixin(new \Laravel\Ui\AuthRouteMethods);
+    	}
 }
